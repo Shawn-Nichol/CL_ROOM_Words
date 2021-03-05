@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 
 /**
@@ -13,7 +14,7 @@ import androidx.room.Query
 @Dao
 interface WordDao {
     @Query("SELECT * FROM word_table ORDER BY word ASC")
-    fun getAlphabetizedWords(): List<Word>
+    fun getAlphabetizedWords(): Flow<List<Word>>
 
     // @Insert: is special DAO method annotation where you don't have to provide any SQL.
     // onConflictStrategy: ignores matching words.
