@@ -23,55 +23,53 @@ abstract class WordRoomDatabase : RoomDatabase() {
 
     abstract fun wordDao(): WordDao
 
-    private class WordDatabaseCallback(
-        private val scope: CoroutineScope
-    ) : RoomDatabase.Callback() {
-
-        override fun onCreate(db: SupportSQLiteDatabase) {
-            super.onCreate(db)
-            INSTANCE?.let { database ->
-                scope.launch {
-                    var wordDao = database.wordDao()
-
-                    // Delete all content here.
-                    wordDao.deleteAll()
-
-                    // Add sample words.
-                    var word = Word("Hello")
-                    wordDao.insert(word)
-                    word = Word("World!")
-                    wordDao.insert(word)
-
-
-                    word = Word("TODO!")
-                    wordDao.insert(word)
-                }
-            }
-        }
-    }
-
     companion object {
+        // Singleton prevents multiple instance of database opening at the same time.
         @Volatile
         private var INSTANCE: WordRoomDatabase? = null
 
+        // returns the singleton. It'll create the database the first time it's accessed, using Room's
+        // database builder to create a RoomDatabase object in the application context from the
+        // WordRoomDatabase class and names it.
         fun getDatabase(
             context: Context,
             scope: CoroutineScope
         ): WordRoomDatabase {
-            // if the INSTANCE is not null, then return it,
-            // if it is, then create the database
+            // If the INSTANCE is not null, then return it,
+            // If it is, then create the database.
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     WordRoomDatabase::class.java,
                     "word_database"
-                )
-                    .addCallback(WordDatabaseCallback(scope))
-                    .build()
+                ).build()
                 INSTANCE = instance
                 // return instance
                 instance
             }
         }
     }
+
+    private class WordDatabaseCallback(private val scope: CoroutineScope) :  RoomDatabase.Callback() {
+        override fun onCreate(db: SupportSQLiteDatabase) {
+            super.onCreate(db)
+            INSTANCE?.let { database ->
+                scope.launch {
+                    populateDatabase(database.wordDao())
+                }
+            }
+        }
+
+        suspend fun populateDatabase(wordDao: WordDao) {
+            // Delete all content here.
+            wordDao.deleteAll()
+
+            // Add sample words.
+            var word = Word("Hello")
+            wordDao.insert(word)
+            word = Word("World!")
+            wordDao.insert(word)
+        }
+    }
 }
+
