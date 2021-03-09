@@ -29,7 +29,7 @@
             android:onClick="@{() -> binding.fabClick()}"
             android:src="@drawable/ic_add_black_24dp"
             android:layout_gravity="bottom|end"
-            app:layout_behavior=".main.FABBehavior"/>
+            app:layout_behavior=".main.ui.FABBehavior"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

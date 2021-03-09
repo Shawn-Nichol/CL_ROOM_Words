@@ -19,4 +19,8 @@ class WordRepository @Inject constructor(private val wordDao: WordDao) {
     suspend fun insert(word: Word) {
         wordDao.insert(word)
     }
+
+    suspend fun deleteWord(word: Word) {
+        wordDao.delete(word)
+    }
 }

@@ -6,12 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.cl_room_words.*
 import com.example.cl_room_words.databinding.ActivityMainBinding
+import com.example.cl_room_words.main.ui.CustomItemTouchHelper
+import com.example.cl_room_words.main.ui.WordListAdapter
 import com.example.cl_room_words.room.Word
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -58,6 +59,9 @@ class MainActivity : AppCompatActivity() {
         recyclerView.apply {
             adapter = rvAdapter
             layoutManager = LinearLayoutManager(context)
+
+            val customItemTouchHelper = ItemTouchHelper(CustomItemTouchHelper(context, wordViewModel))
+            customItemTouchHelper.attachToRecyclerView(recyclerView)
         }
     }
 

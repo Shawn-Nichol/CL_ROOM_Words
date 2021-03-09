@@ -13,6 +13,10 @@ class WordViewModel @Inject constructor(private val repository: WordRepository) 
     fun insert(word: Word) = viewModelScope.launch {
         repository.insert(word)
     }
+
+    fun deleteWord(word: Word) = viewModelScope.launch {
+        repository.deleteWord(word)
+    }
 }
 
 //class WordViewModelFactory(private val repository: WordRepository) : ViewModelProvider.Factory {

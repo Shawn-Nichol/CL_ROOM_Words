@@ -1,4 +1,4 @@
-package com.example.cl_room_words.main
+package com.example.cl_room_words.main.ui
 
 import android.content.Context
 import android.util.AttributeSet

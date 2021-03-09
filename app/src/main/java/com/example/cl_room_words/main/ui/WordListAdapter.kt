@@ -1,4 +1,4 @@
-package com.example.cl_room_words.main
+package com.example.cl_room_words.main.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -12,15 +12,6 @@ import com.example.cl_room_words.R
 import com.example.cl_room_words.room.Word
 
 class WordListAdapter : ListAdapter<Word, WordListAdapter.WordViewHolder>(WordsComparator()) {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder {
-        return WordViewHolder.create(parent)
-    }
-
-    override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
-        val current = getItem(position)
-        holder.bind(current.word)
-    }
 
     class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val wordItemView: TextView = itemView.findViewById(R.id.textView)
@@ -37,6 +28,19 @@ class WordListAdapter : ListAdapter<Word, WordListAdapter.WordViewHolder>(WordsC
             }
         }
     }
+
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder {
+        return WordViewHolder.create(parent)
+    }
+
+    override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
+        val current = getItem(position)
+        holder.bind(current.word)
+    }
+
+
 
     class WordsComparator : DiffUtil.ItemCallback<Word>() {
         override fun areItemsTheSame(oldItem: Word, newItem: Word): Boolean {
