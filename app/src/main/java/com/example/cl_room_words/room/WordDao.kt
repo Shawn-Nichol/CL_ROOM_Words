@@ -1,4 +1,4 @@
-package com.example.cl_room_words
+package com.example.cl_room_words.room
 
 import androidx.room.Dao
 import androidx.room.Insert

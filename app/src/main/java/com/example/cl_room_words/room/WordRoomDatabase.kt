@@ -1,7 +1,6 @@
-package com.example.cl_room_words
+package com.example.cl_room_words.room
 
 import android.content.Context
-import androidx.room.CoroutinesRoom
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase

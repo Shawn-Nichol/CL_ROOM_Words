@@ -1,6 +1,8 @@
-package com.example.cl_room_words
+package com.example.cl_room_words.main
 
 import androidx.lifecycle.*
+import com.example.cl_room_words.room.Word
+import com.example.cl_room_words.room.WordRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

@@ -1,9 +1,8 @@
 package com.example.cl_room_words.di
 
 import android.content.Context
-import androidx.room.Room
-import com.example.cl_room_words.WordDao
-import com.example.cl_room_words.WordRoomDatabase
+import com.example.cl_room_words.room.WordDao
+import com.example.cl_room_words.room.WordRoomDatabase
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.CoroutineScope

@@ -1,14 +1,14 @@
-package com.example.cl_room_words
+package com.example.cl_room_words.main
 
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cl_room_words.di.AppComponent
+import com.example.cl_room_words.*
+import com.example.cl_room_words.room.Word
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import javax.inject.Inject
 
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             Toast.makeText(
                     applicationContext,
-                    R.string.empty_not_saved,
+                R.string.empty_not_saved,
                     Toast.LENGTH_LONG
             ).show()
         }
