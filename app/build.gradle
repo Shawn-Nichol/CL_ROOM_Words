@@ -36,14 +36,20 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    // Enables data binding.
+    dataBinding {
+        enabled = true
+    }
+
 }
+
 
 dependencies {
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     implementation "androidx.activity:activity-ktx:$rootProject.activityVersion"
 
-    // Dependencies for working with Architecture components
-    // You'll probably have to update the version numbers in build.gradle (Project)
+    implementation 'com.google.android.material:material:1.1.0'
 
     // Room components
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
@@ -69,11 +75,14 @@ dependencies {
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
+
     // Testing
     testImplementation "junit:junit:$rootProject.junitVersion"
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
-    androidTestImplementation ("androidx.test.espresso:espresso-core:$rootProject.espressoVersion", {
+    androidTestImplementation("androidx.test.espresso:espresso-core:$rootProject.espressoVersion", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidxJunitVersion"
+
+
 }

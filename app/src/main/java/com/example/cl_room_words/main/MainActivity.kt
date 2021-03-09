@@ -5,9 +5,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cl_room_words.*
+import com.example.cl_room_words.databinding.ActivityMainBinding
 import com.example.cl_room_words.room.Word
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import javax.inject.Inject
@@ -15,9 +17,9 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     private val newWordActivityRequestCode = 1
-//    private val wordViewModel: WordViewModel by viewModels {
-//        WordViewModelFactory((application as WordsApplication).repository)
-//    }
+
+    private lateinit var binding: ActivityMainBinding
+    private val rvAdapter = WordListAdapter()
 
     @Inject
     lateinit var wordViewModel: WordViewModel
@@ -25,26 +27,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as WordsApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
-        val adapter = WordListAdapter()
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.binding = this
 
-        // Add an observer on the LiveData returned by getAlphabetizedWords.
-        // The onChanged() method fires when the observed data changes and the activity is
-        // in the foreground.
-        wordViewModel.allWords.observe(this) { words ->
-            // Update the cached copy of the words in the adapter.
-            words.let { adapter.submitList(it) }
-        }
-
-        val fab = findViewById<FloatingActionButton>(R.id.fab)
-        fab.setOnClickListener {
-            val intent = Intent(this@MainActivity, NewWordActivity::class.java)
-            startActivityForResult(intent, newWordActivityRequestCode)
-        }
+        initRecyclerView()
+        submitList()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
@@ -62,6 +50,31 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
             ).show()
         }
+    }
+
+    private fun initRecyclerView() {
+        val recyclerView = binding.recyclerview
+
+        recyclerView.apply {
+            adapter = rvAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+    }
+
+    /**
+     * Observer the getAlphabetizedWords, the OnChanged() method fires when the observed data changes.
+     */
+    private fun submitList() {
+
+        wordViewModel.allWords.observe(this) { words ->
+            // Update the cached copy of the words in the adapter.
+            words.let { rvAdapter.submitList(it) }
+        }
+    }
+
+    fun fabClick() {
+        val intent = Intent(this@MainActivity, NewWordActivity::class.java)
+        startActivityForResult(intent, newWordActivityRequestCode)
     }
 }
 
