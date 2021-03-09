@@ -20,10 +20,13 @@ class MainActivity : AppCompatActivity() {
     private val newWordActivityRequestCode = 1
 
     private lateinit var binding: ActivityMainBinding
-    private val rvAdapter = WordListAdapter()
+
 
     @Inject
     lateinit var wordViewModel: WordViewModel
+
+    @Inject
+    lateinit var rvAdapter: WordListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as WordsApplication).appComponent.inject(this)

@@ -1,43 +1,41 @@
 package com.example.cl_room_words.main.ui
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cl_room_words.R
 import com.example.cl_room_words.room.Word
+import javax.inject.Inject
 
-class WordListAdapter : ListAdapter<Word, WordListAdapter.WordViewHolder>(WordsComparator()) {
+class WordListAdapter @Inject constructor(val context: Context) : ListAdapter<Word, WordListAdapter.ItemViewHolder>(WordsComparator()) {
 
-    class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val wordItemView: TextView = itemView.findViewById(R.id.textView)
+    class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val word: TextView = itemView.findViewById(R.id.textView)
 
-        fun bind(text: String?) {
-            wordItemView.text = text
-        }
-
-        companion object {
-            fun create(parent: ViewGroup): WordViewHolder {
-                val view: View = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.recyclerview_item, parent, false)
-                return WordViewHolder(view)
-            }
-        }
     }
 
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder {
-        return WordViewHolder.create(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
+        val adapterLayout = LayoutInflater.from(parent.context)
+            .inflate(R.layout.recyclerview_item, parent, false)
+        return ItemViewHolder(adapterLayout)
     }
 
-    override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
-        val current = getItem(position)
-        holder.bind(current.word)
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        val item = getItem(position)
+        holder.word.text = item.word
+        holder.word.setOnClickListener {
+            Toast.makeText(context, "${holder.word.text}", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
 
