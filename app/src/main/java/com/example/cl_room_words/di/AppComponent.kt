@@ -4,7 +4,9 @@ import android.content.Context
 import com.example.cl_room_words.MainActivity
 import dagger.BindsInstance
 import dagger.Component
+import javax.inject.Singleton
 
+@Singleton
 @Component(modules = [RoomModule::class])
 interface AppComponent {
 

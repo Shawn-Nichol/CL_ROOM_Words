@@ -8,16 +8,22 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cl_room_words.di.AppComponent
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     private val newWordActivityRequestCode = 1
-    private val wordViewModel: WordViewModel by viewModels {
-        WordViewModelFactory((application as WordsApplication).repository)
-    }
+//    private val wordViewModel: WordViewModel by viewModels {
+//        WordViewModelFactory((application as WordsApplication).repository)
+//    }
+
+    @Inject
+    lateinit var wordViewModel: WordViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as WordsApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

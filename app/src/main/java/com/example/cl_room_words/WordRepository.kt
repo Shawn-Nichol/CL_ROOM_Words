@@ -2,11 +2,12 @@ package com.example.cl_room_words
 
 import androidx.annotation.WorkerThread
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 /**
  * Pass in the DAO instead of the whole database, because you only need to access the DAO.
  */
-class WordRepository(private val wordDao: WordDao) {
+class WordRepository @Inject constructor(private val wordDao: WordDao) {
     // Room Executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
     val allWords: Flow<List<Word>> = wordDao.getAlphabetizedWords()
