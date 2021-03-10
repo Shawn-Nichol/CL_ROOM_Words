@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-
     @Inject
     lateinit var wordViewModel: WordViewModel
 
@@ -61,10 +60,10 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView.apply {
             adapter = rvAdapter
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-            val customItemTouchHelper = ItemTouchHelper(CustomItemTouchHelper(context, wordViewModel))
-            customItemTouchHelper.attachToRecyclerView(recyclerView)
+            val customItemTouchHelper = ItemTouchHelper(CustomItemTouchHelper(wordViewModel))
+            customItemTouchHelper.attachToRecyclerView(this)
         }
     }
 
@@ -73,9 +72,9 @@ class MainActivity : AppCompatActivity() {
      */
     private fun submitList() {
 
-        wordViewModel.allWords.observe(this) { words ->
+        wordViewModel.allWords.observe(this) {
             // Update the cached copy of the words in the adapter.
-            words.let { rvAdapter.submitList(it) }
+            it.let { rvAdapter.submitList(it) }
         }
     }
 

@@ -1,20 +1,19 @@
 package com.example.cl_room_words.main.ui
 
-import android.content.Context
 import android.graphics.Color
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cl_room_words.main.WordViewModel
 import com.example.cl_room_words.room.Word
 
-class CustomItemTouchHelper(mContext: Context, val viewModel: WordViewModel) : ItemTouchHelper.Callback() {
+class CustomItemTouchHelper (val viewModel: WordViewModel) : ItemTouchHelper.Callback() {
 
     override fun getMovementFlags(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
     ): Int {
         val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
-        val swipeFlags = ItemTouchHelper.LEFT
+        val swipeFlags = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
         return makeMovementFlags(dragFlags, swipeFlags)
     }
 
@@ -41,7 +40,6 @@ class CustomItemTouchHelper(mContext: Context, val viewModel: WordViewModel) : I
         super.onSelectedChanged(viewHolder, actionState)
         if(actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
             viewHolder?.itemView?.setBackgroundColor(Color.RED)
-
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.cl_room_words.room
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface WordDao {
     @Query("SELECT * FROM word_table ORDER BY word ASC")
-    fun getAlphabetizedWords(): Flow<List<Word>>
+    fun getAlphabetizedWords(): LiveData<List<Word>>
 
     // @Insert: is special DAO method annotation where you don't have to provide any SQL.
     // onConflictStrategy: ignores matching words.

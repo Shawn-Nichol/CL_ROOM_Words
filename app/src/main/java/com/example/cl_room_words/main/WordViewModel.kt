@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class WordViewModel @Inject constructor(private val repository: WordRepository) : ViewModel() {
 
-    val allWords: LiveData<List<Word>> = repository.allWords.asLiveData()
+    val allWords: LiveData<List<Word>> = repository.allWords
 
     fun insert(word: Word) = viewModelScope.launch {
         repository.insert(word)
